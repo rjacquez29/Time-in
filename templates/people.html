@@ -1,0 +1,46 @@
+{% extends "layout.html" %} {% block title %} People {% endblock %} {% block
+main %}
+<div>
+  <div class="container-md bg-white rounded-3">
+    <div class="modal-header" style="margin-bottom: 20px">
+      <h5>People</h5>
+    </div>
+
+    <div class="container">
+      <div class="d-flex flex-wrap" style="height: 20%">
+        {% for person in all_colleagues %}
+        <div
+          class="card overflow-hidden"
+          style="width: 300px; height: 450px; margin: 8px"
+        >
+          <img
+            ⁄
+            src="static/faces/{{ person.face }}"
+            alt="{{ person.name }}"
+            style="width: 100%; height: 60%"
+          />
+          <div
+            class="container"
+            style="width: 100%; height: 50%; padding: auto; bottom: 0%"
+          >
+            <div style="height: 50%">
+              <br />
+              <h5>{{ person.name }} {{ person.lastname }}</h5>
+            </div>
+            <br />
+            <div style="height: 50%">
+              <div class="align-self-stretch position-absolute bottom-0">
+                <p class="title">{{ person.role }}</p>
+                <p>{{ person.email }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  {% endblock %}
+</div>

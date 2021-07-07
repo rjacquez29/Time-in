@@ -1,0 +1,9 @@
+Flask
+Flask-Session
+requests
+flask_SQLAlchemy
+flask_session
+flask_uploads
+flask_wtf
+numpy
+requests

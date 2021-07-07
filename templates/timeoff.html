@@ -1,0 +1,167 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Time-off
+{% endblock %}
+
+{% block main %}
+
+
+<div class="container-md">
+    <div class="container-md bg-white rounded-3">
+        <div class="modal-header" style="margin-bottom:20px;">
+          <h5>Request time-off</h5>
+        </div>
+        <div class="form-control shadow p-3 mb-5 bg-body rounded">
+          <form action="/timeoff" method="POST" class="needs-validation">
+        <div class="input-group">
+            <span class="input-group-text">From</span>
+            <input type="date" name="start" class="form-control" required>
+            <span class="input-group-text">To</span>
+            <input type="date" name="end" class="form-control">
+          </div>
+        <br>
+          <div class="mb-3 has-validation">
+            <textarea class="form-control" aria-describedby="inputGroupPrepend" name="reason" rows="3" maxlength="120" placeholder="Reason" required></textarea>
+          <div class="invalid-feedback">
+            Please state.
+          </div>
+          
+          </div>
+          <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+        </div>
+    </div>
+</div>
+<br>
+</div>
+
+
+
+
+
+<div class="table-responsive container-md ">
+    <div class="container-md bg-white rounded-3">
+        <div class="modal-header" style="margin-bottom:25px;">
+          <h5>My requests</h5>
+        </div>
+        <div style="margin:auto" >
+        {% for request in all_request%}
+        <div class="form-control shadow p-3 mb-5 bg-body rounded">
+          <div class="container">
+            <div class="form-control overflow-auto" style="margin-bottom:10px">
+              <p style="color:slategray">Unable to work From <b>{{ request.from_off }}</b> To <b>{{ request.to_off }}</b></p>
+              <p><b>Reason:</b> {{ request.reason }}</p>
+            <p style="color:slategray">Status: <b>{{ request.status }}</b></p>
+            </div>
+            <p style="color:slategray"><small><i>Requested on {{ request.timestamp }}</i></small></p>
+            {% if request.status == "Pending"%}
+            
+               <div class="footer">
+                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#editModal" onclick="dataPass('{{ request.id }}', '{{ request.from_off }}', '{{ request.to_off }}', '{{ request.reason }}', '{{ request.timestamp }}')">
+                  Edit
+                </button>
+               <!-- Button trigger modal -->
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="idPass('{{ request.id }}')">
+                  Delete
+                </button>
+               </div>
+            {% endif %}
+          </div>
+        </div>
+        {% endfor %}
+    </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+  <div class="modal-dialog ">
+    <div class="modal-content ">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Warning!</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this request?
+      </div>
+      <div class="modal-footer">
+        <form action="/delete_toff" method="POST">
+          <input type="hidden" name="recId" id="recId" value="">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Modal -->
+<div id="editModal" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+
+  <div class="modal-dialog modal-lg" >
+    <!-- Modal content -->
+    <div class="modal-content"  style="padding: 20px;">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit request</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+        <form action="/edit_toff" method="POST" class="needs-validation">
+          <div class="modal-body">
+            <div class="input-group">
+            <input type="text" hidden name="form" value="edit">
+            <input type="hidden" id="edit_id" name="id" value="">
+            <span class="input-group-text">From</span>
+            <input type="date" id="edit_start" name="start" placeholder="" class="form-control" required>
+            <span class="input-group-text">To</span>
+            <input type="date" id="edit_end" name="end" value="" class="form-control">
+          </div>
+          </div>
+          <div class="mb-3 has-validation">
+            <textarea class="form-control" id="edit_reason" value="" aria-describedby="inputGroupPrepend" name="reason" rows="3" maxlength="120" placeholder="Reason" required></textarea>
+          <div class="invalid-feedback">
+            Please state reason.
+          </div>
+          </div>
+          <div class="modal-footer">
+           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button class="btn btn-primary" type="submit">Edit</button>
+        </div>
+    </form>
+    </div>
+  </div>
+  
+</div>
+
+<script>
+
+  // When the user clicks the button, open the modal 
+  
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (function () {
+    "use strict";
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.querySelectorAll(".needs-validation");
+
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms).forEach(function (form) {
+      form.addEventListener(
+        "submit",
+        function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+
+          form.classList.add("was-validated");
+        },
+        false
+      );
+    });
+  });
+
+</script>
+
+
+{% endblock %}

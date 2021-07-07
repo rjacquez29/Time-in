@@ -1,0 +1,117 @@
+{% extends "layout.html" %} {% block title %} Timesheet {% endblock %} {% block
+main %}
+
+<div class="container-md">
+  <div class="container-md shadow p-3 mb-5 bg-body rounded">
+    <div class="modal-header" style="margin-bottom: 20px">
+      <h5>Timesheet</h5>
+    </div>
+    <div class="form-group row g-3">
+      <div class=" col-md">
+      <form id="month" action="/timesheet" method="POST">
+        <select class="form-control" name="month" onchange="sendmonth()">
+          <option disabled selected value="">Select Month</option>
+          {% for month in shift_month%}
+          <option value="{{ month.value }}">{{ month.name }}</option>
+          {% endfor%}
+        </select>
+      </form>
+    </div>
+    
+
+    </div>
+    
+    <div class="modal-header" style="margin-bottom: 20px">
+      <h5><i>{{ month }}</i></h5>
+    </div>
+    <div
+      style="
+        overflow-y: scroll;
+        height: 500px;
+        background-color: white;
+        border-radius: 4px;
+      "
+      class="table-responsive"
+    >
+      <table
+        class="
+          table table-bordered table-striped table-hover table-light table-sm
+        "
+      >
+        <thead>
+          <tr>
+            <th scope="col">Day</th>
+            <th scope="col">Date</th>
+            <th scope="col">Clock-In</th>
+            <th scope="col">Clock-Out</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for shift in all_shifts %}
+          <tr
+          data-bs-toggle="modal" data-bs-target="#myModal"
+            onclick="passData('shift{{  shift.id  }}', '{{ shift.week }} {{ shift.month }}/{{ shift.day }}/{{ shift.year }}' ,'{{ shift.time_in }}', '{{ shift.time_out }}')"
+            id="shift{{  shift.id  }}"
+            value="{{  shift.id  }}"
+          >
+            <td>{{ shift.week }}</td>
+            <td>{{ shift.day }}/{{ shift.month }}/{{ shift.year }}</td>
+            <td>{{ shift.time_in }}</td>
+            {% if shift.time_out == 'Currently clocked in' %}
+              <td style="color: #198754;"><b>{{ shift.time_out }}</b></td>
+            {% else %}
+              <td>{{ shift.time_out }}</td>
+              {% endif %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- The Modal -->
+  <div id="myModal" class="modal fade" tabindex="-1" aria-labelledby="myModal" aria-hidden="true" >
+     <div class="modal-dialog modal-lg" >
+       <!-- Modal content -->
+    <div class="modal-content">
+      <div class="modal-header">
+        
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="/report" method="POST"></form>
+      <div class="modal-body">
+        <h6 id="rowDetails"></h6>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+  
+      </form>
+    </div>
+  </div>
+     </div>
+    
+</div>
+
+<script>
+ 
+
+  // Pass data for pre fill-up
+  function passData(elementid, day, timeIn, timeOut) {
+    totalHours = diff(timeIn, timeOut);
+    if (timeOut == "Currently clocked in") {
+      document.getElementById("rowDetails").innerHTML =
+        day + " -- Currently clocked in";
+      return;
+    }
+    document.getElementById("rowDetails").innerHTML =
+      day + " (Hours worked - " + totalHours + ")";
+    document.getElementById("recordId").innerHTML = elementid;
+    document.getElementById("in").value = timeIn;
+    document.getElementById("out").value = timeOut;
+  }
+
+</script>
+
+{% endblock %}

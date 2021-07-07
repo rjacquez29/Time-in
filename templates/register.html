@@ -1,0 +1,218 @@
+{% extends "layout.html" %} {% block title %} Register {% endblock %} {% block
+main %}
+<div class="container-md">
+  <div class="container-md bg-white rounded-3" style="padding-bottom: 100px">
+    <div class="modal-header" style="margin-bottom: 20px">
+      <h5>Register new user</h5>
+    </div>
+    <div style="padding: 10px">
+      <form
+        class="row g-3 needs-validation"
+        action="/register"
+        method="post"
+        enctype="multipart/form-data"
+        novalidate
+      >
+        <div class="col-md-5">
+          <label for="validationCustom01" class="form-label needs-validation"
+            >First name</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="validationCustom01"
+            name="name"
+            required
+          />
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+        <div class="col-md-5">
+          <label for="validationCustom02" class="form-label needs-validation"
+            >Last name</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="validationCustom02"
+            name="lastname"
+            required
+          />
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+        <div class="col-md-4">
+          <label
+            for="validationCustomUsername"
+            class="form-label needs-validation"
+            >Email address</label
+          >
+          <div class="input-group has-validation">
+            <input
+              type="email"
+              class="form-control"
+              id="validationCustomUsername"
+              name="email"
+              aria-describedby="inputGroupPrepend"
+              required
+            />
+            <div class="invalid-feedback">Please provide Email address.</div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <label for="validationCustom04" class="form-label needs-validation"
+            >Role</label
+          >
+          <select
+            class="form-select"
+            id="validationCustom04"
+            name="role"
+            required
+          >
+            <option selected disabled value="">Choose...</option>
+            <option value="Staff">Staff</option>
+            <option value="Manager">Manager</option>
+            <option value="Manager"><a href="">Add new store</a></option>
+          </select>
+          <div class="invalid-feedback">Please select a role.</div>
+        </div>
+        <div class="col-md-3">
+          <label for="validationCustom04" class="form-label needs-validation"
+            >Store</label
+          >
+          <select
+            class="form-select"
+            id="validationCustom04"
+            name="store"
+            required
+          >
+            <option selected disabled value="">Choose...</option>
+            {% for store in stores %}
+
+            <option value="{{store.name}}">{{ store.name }}</option>
+
+            {% endfor %}
+          </select>
+          <div class="invalid-feedback">Please select a store.</div>
+        </div>
+        <div class="col-md-4">
+          <label for="password" class="form-label">Password</label>
+          <div class="input-group">
+            <input
+              type="password"
+              class="form-control password"
+              id="password"
+              name="password"
+              minlength="6"
+              aria-describedby="inputGroupPrepend"
+              required
+            />
+            <div class="invalid-feedback">
+              Please choose a password (Must be atleast 6 character).
+            </div>
+            <div
+              id="confirmationalert"
+              class="valid-feedback"
+              style="color: #dc3545"
+            ></div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <label for="confirmation" class="form-label">Confirm password</label>
+          <div class="input-group">
+            <input
+              type="password"
+              class="form-control password"
+              id="confirmation"
+              name="confirmation"
+              minlength="6"
+              onchange="checkpw()"
+              aria-describedby="inputGroupPrepend"
+              required
+            />
+            <div class="invalid-feedback">
+              Please confirm password (Must be atleast 6 character).
+            </div>
+          </div>
+        </div>
+        <div class="mb-2">
+          <label for="formFile" class="form-label">Profile photo</label>
+          <input
+            class="form-control"
+            type="file"
+            accept="image/jpeg"
+            capture="user"
+            id="formFile"
+            name="photo"
+            required
+          />
+          <div class="invalid-feedback">Please choose file.</div>
+        </div>
+        <div class="col-12">
+          <div class="form-check">
+            <input
+              class="form-check-input needs-validation"
+              type="checkbox"
+              value=""
+              id="invalidCheck"
+              required
+            />
+            <label class="form-check-label" for="invalidCheck">
+              Agree to terms and conditions
+            </label>
+            <div class="invalid-feedback">
+              You must agree before submitting.
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <button class="btn btn-primary" type="submit">Register</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  let passwords = document.querySelectorAll(".password");
+
+  passwords.forEach(function (elem) {
+    elem.addEventListener("input", function (eleme) {
+      var pw = document.getElementById("password").value;
+      var conf = document.getElementById("confirmation").value;
+      if (pw != conf) {
+        document.getElementById("confirmationalert").innerHTML =
+          "Password do not match.";
+        document.getElementById("confirmationalert").style.color = "#dc3545";
+      } else if (pw == conf) {
+        document.getElementById("confirmationalert").innerHTML =
+          "Password match!";
+        document.getElementById("confirmationalert").style.color = "green";
+      }
+    });
+  });
+
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (function () {
+    "use strict";
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.querySelectorAll(".needs-validation");
+
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms).forEach(function (form) {
+      form.addEventListener(
+        "submit",
+        function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+
+          form.classList.add("was-validated");
+        },
+        false
+      );
+    });
+  })();
+</script>
+
+{% endblock %}

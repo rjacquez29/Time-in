@@ -1,0 +1,98 @@
+{% extends "layout.html" %} {% block title %} Home {% endblock %} {% block main
+%}
+<div style="width: 100%">
+  <div
+    style="
+      margin-top: 50px;
+      padding-top: 30px;
+      position: sticky;
+      padding-bottom: 30px;
+      text-align: center;
+      border-radius: 4px;
+    "
+  >
+    <div
+      style="
+        width: 250px;
+        height: 320px;
+        border-radius: 4px;
+        padding: 20px;
+        margin: auto;
+        box-shadow: 2px 2px 4px grey;
+      "
+    >
+      <div style="text-align: center; padding: auto">
+        <div
+          class="form-group, form-control"
+          style="box-shadow: 2px 2px 4px grey"
+        >
+          <img
+            src="{{ image }}"
+            alt="image alt text"
+            style="
+              border-radius: 50px;
+              height: 100px;
+              width: 100px;
+              box-shadow: 2px 2px 4px grey;
+            "
+          />
+          <br />
+          <div style="margin-top: 10px; text-shadow: 2px 2px 4px grey">
+            <h5>{{ name }}</h5>
+            <span id="time" style="text-shadow: 2px 2px 4px grey"></span>
+          </div>
+          <br />
+        </div>
+        <form
+          id="clock-out-form"
+          action="/clockout"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <label
+            class="clockbutton btn-danger"
+            id="clock-out"
+            for="upload-photo"
+            onclick="send()"
+            style="cursor: pointer; box-shadow: 2px 2px 4px grey"
+            ><span>Clock-Out</span></label
+          >
+          <input type="hidden" id="longi" name="long" value="" />
+          <input type="hidden" id="lati" name="lat" value="" />
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+  var span = document.getElementById('time');
+
+  function time() {
+  var d = new Date();
+  var s = d.getSeconds();
+  var m = d.getMinutes();
+  var h = d.getHours();
+  span.textContent =
+      ("0" + (h - {{  hour }})).substr(-2) + ":" + ("0" + (m - {{ minute }})).substr(-2) + ":" + ("0" + s).substr(-2);
+  }
+
+  setInterval(time, 1000);
+
+
+  navigator.geolocation.getCurrentPosition(function(position) {
+      document.getElementById("longi").value = position.coords.latitude;
+      document.getElementById("lati").value = position.coords.longitude;
+      });
+
+  function send(){
+      if (document.getElementById("longi").value && document.getElementById("lati").value) {
+          document.getElementById("clock-out-form").submit();
+      }
+      else {
+          alert("ERROR: Refresh the page and Allow GPS access or change settings on your phone!");
+      }
+  }
+</script>
+{% endblock %}

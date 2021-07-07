@@ -1,0 +1,379 @@
+{% extends "layout.html" %} {% block title %} Admin {% endblock %} {% block main
+%}
+
+<div class=" container-md">
+  <div class=" container-md container-md shadow p-3 mb-5 bg-body rounded" style="padding-bottom: 100px;">
+    <ul class="nav nav-pills">
+      <li class="nav-item">
+        <a class="nav-link" aria-current="page" href="/admin">Requests</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a
+          class="nav-link dropdown-toggle"
+          data-bs-toggle="dropdown"
+          href="#"
+          role="button"
+          aria-expanded="false"
+          >Registration</a
+        >
+        <ul class="dropdown-menu">
+          
+          <li>
+            <a class="dropdown-item" href="#" data-bs-toggle="modal"
+                data-bs-target="#addStore"
+              >Add store location</a
+            >
+          </li>
+          <li><hr class="dropdown-divider" /></li>
+          <li><li><a class="dropdown-item" href="/register">Register new user</a></li></li>
+        </ul>
+      </li>
+    </ul>
+    <p class="dropdown-divider"></p>
+    <div class="modal-header" style="margin-bottom: 20px">
+      <h5>Time-off requests</h5>
+    </div>
+
+    
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link active"
+          id="home-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#newToff"
+          type="button"
+          role="tab"
+          aria-controls="home"
+          aria-selected="true"
+        >
+          Pending
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link"
+          id="profile-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#approved"
+          type="button"
+          role="tab"
+          aria-controls="approved"
+          aria-selected="false"
+        >
+          Approved
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link"
+          id="contact-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#declined"
+          type="button"
+          role="tab"
+          aria-controls="declined"
+          aria-selected="false"
+        >
+          Declined
+        </button>
+      </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      <div
+        class="tab-pane fade show active"
+        id="newToff"
+        role="tabpanel"
+        aria-labelledby="home-tab"
+      >
+        <br />
+        <div style="margin: auto">
+          {% for request in all_request %} 
+          {% if request.status == "Pending"%}
+          <div class="form-control shadow-sm p-3 mb-5 bg-body rounded">
+            <div class="container">
+              <div
+                class="form-control overflow-auto"
+                style="margin-bottom: 10px"
+              >
+                <p style="color: slategray">
+                  Unable to work From <b>{{ request.from_off }}</b> To
+                  <b>{{ request.to_off }}</b>
+                </p>
+                <p><b>Reason:</b> {{ request.reason }}</p>
+                <p style="color: slategray">
+                  Status: <b>{{ request.status }}</b>
+                </p>
+              </div>
+              <p style="color: slategray">
+                <small><i>Requested on {{ request.timestamp }}</i></small>
+              </p>
+              <button
+                type="button"
+                class="btn btn-success"
+                data-bs-toggle="modal"
+                data-bs-target="#actionModal"
+                onclick="act('approve', '{{ request.id }}')"
+              >
+                Approve
+              </button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-toggle="modal"
+                data-bs-target="#actionModal"
+                onclick="act('decline', '{{ request.id }}')"
+              >
+                Decline
+              </button>
+            </div>
+          </div>
+          {% endif %} 
+          {% endfor %}
+        </div>
+      </div>
+      <div
+        class="tab-pane fade"
+        id="approved"
+        role="tabpanel"
+        aria-labelledby="approved-tab"
+      >
+        <br />
+        <div style="margin: auto">
+          {% for request in all_request%} {% if request.status == "Approved"%}
+          <div class="form-control shadow p-3 mb-5 bg-body rounded">
+            <div class="container">
+              <div
+                class="form-control overflow-auto"
+                style="margin-bottom: 10px"
+              >
+                <p style="color: slategray">
+                  Unable to work From <b>{{ request.from_off }}</b> To
+                  <b>{{ request.to_off }}</b>
+                </p>
+                <p><b>Reason:</b> {{ request.reason }}</p>
+                <p style="color: slategray">
+                  Status: <b>{{ request.status }}</b>
+                </p>
+              </div>
+              <p style="color: slategray">
+                <small><i>Requested on {{ request.timestamp }}</i></small>
+              </p>
+              <!-- Button trigger modal -->
+              <button
+                type="button"
+                class="btn btn-danger"
+                data-bs-toggle="modal"
+                data-bs-target="#deleteModal"
+                onclick="idPass('{{ request.id }}')"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+          {% endif %} {% endfor %}
+        </div>
+      </div>
+      <div
+        class="tab-pane fade"
+        id="declined"
+        role="tabpanel"
+        aria-labelledby="declined-tab"
+      >
+        <br />
+        <div style="margin: auto">
+          {% for request in all_request%} {% if request.status == "Declined"%}
+          <div class="form-control shadow p-3 mb-5 bg-body rounded">
+            <div class="container">
+              <div
+                class="form-control overflow-auto"
+                style="margin-bottom: 10px"
+              >
+                <p style="color: slategray">
+                  Unable to work From <b>{{ request.from_off }}</b> To
+                  <b>{{ request.to_off }}</b>
+                </p>
+                <p><b>Reason:</b> {{ request.reason }}</p>
+                <p style="color: slategray">
+                  Status: <b>{{ request.status }}</b>
+                </p>
+              </div>
+              <p style="color: slategray">
+                <small><i>Requested on {{ request.timestamp }}</i></small>
+              </p>
+              <!-- Button trigger modal -->
+              <button
+                type="button"
+                class="btn btn-danger"
+                data-bs-toggle="modal"
+                data-bs-target="#deleteModal"
+                onclick="idPass('{{ request.id }}')"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+          {% endif %} {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Modal -->
+<div
+  class="modal fade"
+  id="deleteModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Warning!</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this request?
+      </div>
+      <div class="modal-footer">
+        <form action="/delete_toff" method="POST">
+          <input type="hidden" name="recId" id="recId" value="" />
+          <input type="hidden" name="page" value="admin" />
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Action Modal -->
+<div
+  class="modal fade"
+  id="actionModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="actionLabel"></h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body" id="alert"></div>
+      <div class="modal-footer">
+        <form action="/action_toff" method="POST">
+          <input type="hidden" name="recId" id="recordId" value="" />
+          <input type="hidden" name="action" id="action" value="" />
+          <button type="submit" class="btn btn-primary">Confirm</button>
+        </form>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Store -->
+<div
+  class="modal fade"
+  id="addStore"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add store location</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form action="/add_store" method="POST" >
+
+          <div class="col-md">
+          <label for="validationCustom01" class="form-label needs-validation"
+            >Store name</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="validationCustom01"
+            name="store_name"
+            required
+          />
+        </div>
+        <div class="col-md">
+          <label for="validationCustom02" class="form-label needs-validation"
+            >Coordinates</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="validationCustom02"
+            name="coordinates"
+            required
+          />
+          <small class="text-muted">Copy and paste coordinates from <a href="https://www.google.com/maps" target="_blank">GOOGLE maps</a>.</small>
+        </div>
+      </div>
+      <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button type="submit" class="btn btn-success">Add</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  function act(action, id) {
+    if (action == "approve") {
+      document.getElementById("actionLabel").innerHTML = "Approve request";
+      document.getElementById("alert").innerHTML =
+        "Please confirm to approve request.";
+      document.getElementById("recordId").value = id;
+      document.getElementById("action").value = "approved";
+    } else if (action == "decline") {
+      document.getElementById("actionLabel").innerHTML = "Decline request";
+      document.getElementById("alert").innerHTML =
+        "Please confirm to decline request.";
+      document.getElementById("recordId").value = id;
+      document.getElementById("action").value = "declined";
+    }
+  }
+</script>
+
+{% endblock %}
