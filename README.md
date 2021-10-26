@@ -4,7 +4,7 @@
 
 #### Description:
 
-clock-in is a timesheet for shift registration, and it also records time-off request from users.
+Clock-in is a timesheet for shift registration, and it also records time-off request from users.
 it uses geolocation to assert that you're within the pirimeter of the assigned work place when the user clocks in.
 each user has an assigned store location coordinates, to chek if the user is within the perimiter of the assigned store.
 this is a web application to apply the knowledge i learned from the CS50 course.
