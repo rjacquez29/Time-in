@@ -4,13 +4,13 @@
 
 #### Description:
 
-clock-in timesheet for shift registration and time-off request management.
-it uses geolocation to assert that you're in the assigned work place if you clock in.
-each user has an assigned store location coordinates to chek if the user is within the perimiter of the store assigned.
-this is a very simple web app to apply the knowledge i learned from this course.
+clock-in is a timesheet for shift registration, and it also records time-off request from users.
+it uses geolocation to assert that you're within the pirimeter of the assigned work place when the user clocks in.
+each user has an assigned store location coordinates, to chek if the user is within the perimiter of the assigned store.
+this is a web application to apply the knowledge i learned from the CS50 course.
 
-i decided to make this app for my brother's bussiness, hoping it would help him manage employees shifts, and also from my 10 years of experience in shift working condition.
-i intend to improve this program in the near future by adding new features and also make it more efficient, as soon as i learn new technologies and improve my coding skills.
+I decided to make this app for my brother's bussiness, to help him manage employees shifts, and also from my 10 years of experience in shift working condition in Large-scale retail and in restaurants.
+I intend to improve this program in the near future by adding new features, make it more efficient, as soon as i learn new technologies and improve my coding skills.
 
 ### technologies used:
 - Flask
