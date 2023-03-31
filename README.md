@@ -4,88 +4,18 @@
 
 #### Description:
 
-Clock-in is a timesheet for shift registration, and it also records time-off request from users.
-it uses geolocation to assert that you're within the pirimeter of the assigned work place when the user clocks in.
-each user has an assigned store location coordinates, to chek if the user is within the perimiter of the assigned store.
-this is a web application to apply the knowledge i learned from the CS50 course.
+Clock-in is a web application designed for shift registration and time-off requests. The application leverages geolocation to ensure that users are within the perimeter of their assigned workplace when clocking in. Each user has a set of assigned store location coordinates to verify their location. The project was created as part of the CS50 course, and the developer aims to improve the program by adding new features and increasing its efficiency as they acquire new skills.
 
-I decided to make this app for my brother's bussiness, to help him manage employees shifts, and also from my 10 years of experience in shift working condition in Large-scale retail and in restaurants.
-I intend to improve this program in the near future by adding new features, make it more efficient, as soon as i learn new technologies and improve my coding skills.
+The application uses Flask, Flask-sqlalchemy, and werkzeug for password hashing and Postgres DB for data storage. The project was created to assist the developer's brother in managing his business's employee shifts and from the developer's own ten years of experience working in shift-based conditions in large-scale retail and restaurants.
 
-### technologies used:
-- Flask
-- Flask-sqlalchemy
-- werkzeug for password hash
-- Postgres DB
+The application has two types of accounts: Manager and Staff. Managers are the only ones who can register new users. The Timesheet feature enables users to view all the shifts they have worked in the current month, query other months, and see the total hours worked for each shift. If a user is currently clocked in, the clock-out option will appear as "currently clocked in," and the effective time will only show up after the user clocks out.
 
-.........................................................................................................................
+The Time-off feature enables users to create time-off requests by specifying the start and end dates and the reason. If only the start date is provided, the end date will automatically be set to the same date to help the manager manage employee requests if they are unable to work on coming days. Users can modify or delete requests that haven't been approved or declined yet, edit the reason statement, and update the start and end dates. If a change is made, the timestamp will show the time and date when the request was modified.
 
-### How it works:
+The People feature shows all colleagues in the same store, their roles, and email addresses for contact purposes. The developer also added a profile photo option to help users familiarize themselves with their colleagues' names and faces.
 
-There are two type's of accounts:
-- Manager
-- Staff
+The Admin button is only visible to managers, allowing them to approve or decline time-off requests, add store locations for geolocation purposes, and register new users by uploading their information and profile pictures.
 
-New user registration can only be made by managers.
+The application uses Postgres as its database management system since it allows for frequent information updates that SQLite3 cannot provide. The database includes registers for users, stores, timesheets, and time-offs.
 
-### Timesheet
-Allows you to see all the shifts you've worked in the current month
-it also allows you to query other months by selecting the prefered month
-By clicking on a shift, you can see the total hours worked for that shift
-if the user is currently clocked in, the clock out will apear "currently clocked in" and only after the user clocks out will the affective time will show.
-
-
-### Time-off
-Create a time-off request from a given date, it requires start date, end date and your reason.
-    - if you only put the start date, it automaticaly saves the end date as the same date.
-    this is to help the manager for mananging employees request if un able to work in comming days.
--The request can be modified or delete by clicking on the selected shift. this can be done only if the request hasn't been approved or declined yet.
-    - you can modify the start date and end date
-    - you can also edit the reason statement.
-      - once a change has benn made, the time stamp will be replaced with the time and date when the request has been changed and indicated that this request has been modified.
-
-### People
-See all colligues in the same store with thier respective role and e-mail addresses to contact. I decided to add the profile photo so other colligues can be familiarized by the face and name of thier work mates.
-
-### Admin
-this button will only show if the account loged in is from a manager, to limit access to the staff.
- Manage time-off request from staff
-    -  Allows manager to Approve or Decline a time-off request.
-    -  requests are then segregated by the action made ont the tab.
- Add a store location for Geolocation purposes.
-  managers can add store location so when registering a new user, the list of stores will show on the options available.
-    - Store name is required
-    - Coordinates are copied and pasted from Google maps by searching the address of the intended store.
- Register a new user by inserting the new user's information and upload profile picture.
-....................................................................................................
-
-## Database: Postgres
-
-i decided to use postgress because i have to update often the informations in the databse which sqlite3 won't allow me to do.
-
-#### Registers:
- - Users
-    - Name
-    - Lastname
-    - Email address
-    - Password hash
-    - Profile photo file path
-    - Assigned store ID
-    - User's role
-
-- Stores
-    - Store name
-    - Longitude
-    - Latitude
-
-- Timesheet
-    - Date and time
-    - Clock-in
-    - Clock-out
-
-- Time off
-    - Timestamp
-    - From date
-    - To date
-    - Reason
-    - status
+Overall, Clock-in is a comprehensive web application that provides managers with tools to manage employee shifts efficiently and assists staff in managing their time-off requests.
