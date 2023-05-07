@@ -4,7 +4,7 @@
 
 #### Introduction:
 
-Welcome to the Clock-in web application documentation, designed for shift registration and time-off requests. This application was created as part of the Harvard University's CS50 Introduction to computer science course and aims to assist managers in efficiently managing their employees' shifts while providing staff with tools to manage their time-off requests. 
+Welcome to the Clock-in web application documentation, designed for shift registration and time-off requests. This application was created as part of the Harvard University's CS50 - an introduction to computer science course and aims to assist managers in efficiently managing their employees' shifts while providing staff with tools to manage their time-off requests. 
 
 #### System Architecture:
 
