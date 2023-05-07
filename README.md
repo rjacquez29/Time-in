@@ -4,7 +4,7 @@
 
 #### Introduction:
 
-Welcome to the Clock-in web application documentation, designed for shift registration and time-off requests. This application was created as part of the CS50 course and aims to assist managers in efficiently managing their employees' shifts while providing staff with tools to manage their time-off requests. The developer of the application intends to enhance the program by adding new features and improving its efficiency as they acquire new skills.
+Welcome to the Clock-in web application documentation, designed for shift registration and time-off requests. This application was created as part of the CS50 course and aims to assist managers in efficiently managing their employees' shifts while providing staff with tools to manage their time-off requests. 
 
 #### System Architecture:
 
