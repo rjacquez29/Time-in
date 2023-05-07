@@ -1,4 +1,4 @@
-# Time-in
+# Time-in web application
 
 #### Video Demo: https://youtu.be/DQeHZXnPPuQ
 
