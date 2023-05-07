@@ -8,7 +8,7 @@ Welcome to the Clock-in web application documentation, designed for shift regist
 
 #### System Architecture:
 
-Clock-in is a Flask-based web application that leverages Flask-sqlalchemy and werkzeug for password hashing. The application uses Postgres as its database management system, which allows for frequent information updates that SQLite3 cannot provide. The database comprises registers for users, stores, timesheets, and time-offs.
+Clock-in is a Flask-based web application that leverages Flask-sqlalchemy and werkzeug for password hashing. The application uses Postgres as its database management system, which allows for frequent information updates. The database comprises registers for users, stores, timesheets, and time-offs.
 
 #### Application Features:
 
