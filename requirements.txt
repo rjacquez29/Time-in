@@ -1,9 +1,6 @@
-Flask
-Flask-Session
-requests
-flask_SQLAlchemy
-flask_session
-flask_uploads
-flask_wtf
-numpy
-requests
+Flask==2.0.1
+Flask-Session==0.4.0
+Flask-SQLAlchemy==3.0.1
+Werkzeug==2.0.1
+requests==2.31.0
+psycopg2-binary==2.9.7
